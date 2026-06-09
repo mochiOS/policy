@@ -1,0 +1,4 @@
+Contact: mailto:security@mochios.org
+Preferred-Languages: ja
+Canonical: https://mochios.org/.well-known/security.txt
+Policy: https://policy.mochios.org/security

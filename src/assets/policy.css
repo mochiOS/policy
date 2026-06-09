@@ -1,0 +1,267 @@
+:root {
+    --doc-width: 820px;
+    --toc: 240px;
+}
+
+body {
+    background: var(--white);
+}
+
+.policy-layout {
+    display: flex;
+    padding-top: var(--nav);
+    min-height: 100vh;
+}
+
+.policy-sidebar {
+    width: var(--toc);
+    position: fixed;
+    top: var(--nav);
+    bottom: 0;
+    left: 0;
+    padding: 22px 14px;
+    border-right: 1px solid var(--border);
+    background: var(--white);
+    overflow-y: auto;
+}
+
+.policy-main {
+    margin-left: var(--toc);
+    width: 100%;
+    padding: 44px;
+}
+
+.policy-document {
+    max-width: var(--doc-width);
+}
+
+.policy-hero {
+    margin-bottom: 18px;
+}
+
+.policy-eyebrow {
+    font-size: 11px;
+    color: var(--g400);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+}
+
+.policy-title {
+    font-size: 34px;
+    line-height: 1.12;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    margin-bottom: 10px;
+}
+
+.policy-subtitle {
+    color: var(--g600);
+    font-size: 14px;
+    line-height: 1.7;
+    max-width: 640px;
+}
+
+.policy-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 18px 0 24px;
+}
+
+.policy-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--g100);
+    color: var(--g600);
+    font-size: 12px;
+}
+
+.doc-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    box-shadow: var(--shadow);
+    padding: 30px 34px;
+}
+
+.markdown {
+    color: var(--black);
+    font-size: 14.5px;
+    line-height: 1.85;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.28;
+}
+
+.markdown h1 {
+    font-size: 30px;
+    margin: 0 0 22px;
+}
+
+.markdown h2 {
+    font-size: 21px;
+    margin: 34px 0 12px;
+    padding-top: 6px;
+}
+
+.markdown h3 {
+    font-size: 16px;
+    margin: 24px 0 8px;
+}
+
+.markdown p {
+    margin: 0 0 14px;
+    color: var(--g800);
+}
+
+.markdown ul,
+.markdown ol {
+    margin: 0 0 16px 1.3em;
+    color: var(--g800);
+}
+
+.markdown li {
+    margin: 5px 0;
+    padding-left: 2px;
+}
+
+.markdown a {
+    color: var(--black);
+    text-decoration: underline;
+    text-decoration-color: var(--g400);
+    text-underline-offset: 3px;
+}
+
+.markdown a:hover {
+    text-decoration-color: var(--black);
+}
+
+.markdown code {
+    font-family: var(--mono);
+    font-size: 0.92em;
+    background: var(--g100);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1px 5px;
+}
+
+.markdown pre {
+    margin: 16px 0;
+    padding: 14px 16px;
+    overflow-x: auto;
+    background: var(--g100);
+    border: 1px solid var(--border);
+    border-radius: var(--rs);
+}
+
+.markdown pre code {
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+.markdown blockquote {
+    margin: 16px 0;
+    padding: 12px 16px;
+    border-left: 3px solid var(--black);
+    background: var(--g100);
+    border-radius: 0 var(--rs) var(--rs) 0;
+    color: var(--g600);
+}
+
+.markdown hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 28px 0;
+}
+
+.policy-loading,
+.policy-error {
+    padding: 30px;
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    background: var(--white);
+    box-shadow: var(--shadow);
+    color: var(--g600);
+    font-size: 14px;
+}
+
+.policy-footer {
+    max-width: var(--doc-width);
+    margin-top: 24px;
+    padding: 16px 2px 0;
+    color: var(--g400);
+    font-size: 12px;
+}
+
+.policy-footer a {
+    color: var(--g600);
+    text-decoration: none;
+}
+
+.policy-footer a:hover {
+    color: var(--black);
+}
+
+@media (max-width: 860px) {
+    nav {
+        padding: 0 16px;
+    }
+
+    .nav-right {
+        display: none;
+    }
+
+    .policy-layout {
+        display: block;
+    }
+
+    .policy-sidebar {
+        position: static;
+        width: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 12px 12px;
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+    }
+
+    .policy-sidebar .sb-section {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 0;
+    }
+
+    .policy-sidebar .sb-label {
+        display: none;
+    }
+
+    .policy-sidebar .sb-link {
+        white-space: nowrap;
+    }
+
+    .policy-main {
+        margin-left: 0;
+        padding: 28px 18px;
+    }
+
+    .policy-title {
+        font-size: 28px;
+    }
+
+    .doc-card {
+        padding: 24px 20px;
+    }
+}

@@ -1,0 +1,63 @@
+{
+    "site": {
+        "title": "mochiOS Policy",
+        "description": "mochiOS関連サービスの方針文書"
+    },
+    "sections": [
+        {
+            "label": "Policy",
+            "items": [
+                {
+                    "path": "/",
+                    "navTitle": "Overview",
+                    "title": "mochiOS Policy",
+                    "eyebrow": "Legal Center",
+                    "category": "Policy",
+                    "subtitle": "mochiOS関連サービスの規約、プライバシーポリシー、開発者向けルールをまとめています。",
+                    "markdown": "/content/index.md"
+                },
+                {
+                    "path": "/privacy/",
+                    "navTitle": "Privacy",
+                    "title": "プライバシーポリシー",
+                    "eyebrow": "Privacy",
+                    "category": "Policy",
+                    "subtitle": "mochiOS関連サービスにおける情報の取得、利用、保存、問い合わせ方法について説明します。",
+                    "markdown": "/content/privacy.md"
+                },
+                {
+                    "path": "/terms/",
+                    "navTitle": "Terms",
+                    "title": "利用規約",
+                    "eyebrow": "Terms",
+                    "category": "Policy",
+                    "subtitle": "mochiOS関連サービスを利用する際の基本的なルールです。",
+                    "markdown": "/content/terms.md"
+                }
+            ]
+        },
+        {
+            "label": "AppStore",
+            "items": [
+                {
+                    "path": "/appstore/developer-terms/",
+                    "navTitle": "Developer Terms",
+                    "title": "AppStore開発者規約",
+                    "eyebrow": "Developer Terms",
+                    "category": "AppStore",
+                    "subtitle": "mochiOS AppStoreでアプリを登録・配布する開発者向けの規約です。",
+                    "markdown": "/content/appstore/developer-terms.md"
+                },
+                {
+                    "path": "/appstore/review-guidelines/",
+                    "navTitle": "Review Guidelines",
+                    "title": "AppStore審査ガイドライン",
+                    "eyebrow": "Review Guidelines",
+                    "category": "AppStore",
+                    "subtitle": "mochiOS AppStoreに提出されるアプリの審査方針です。",
+                    "markdown": "/content/appstore/review-guidelines.md"
+                }
+            ]
+        }
+    ]
+}

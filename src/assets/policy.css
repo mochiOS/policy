@@ -265,3 +265,44 @@ body {
         padding: 24px 20px;
     }
 }
+
+
+.policy-link-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 16px 0 24px;
+}
+
+.policy-link-card {
+    display: block;
+    padding: 16px 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    background: var(--white);
+    color: var(--black);
+    text-decoration: none;
+    box-shadow: var(--shadow);
+}
+
+.policy-link-card:hover {
+    background: var(--g100);
+}
+
+.policy-link-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.policy-link-subtitle {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--g600);
+}
+
+@media (max-width: 640px) {
+    .policy-link-grid {
+        grid-template-columns: 1fr;
+    }
+}

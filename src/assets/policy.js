@@ -1,35 +1,5 @@
-const DOCS = {
-    "/": {
-        title: "mochiOS Policy",
-        eyebrow: "Legal Center",
-        subtitle: "mochiOS関連サービスの規約、プライバシーポリシー、開発者向けルールをまとめています。",
-        markdown: "/content/index.md"
-    },
-    "/privacy/": {
-        title: "プライバシーポリシー",
-        eyebrow: "Privacy",
-        subtitle: "mochiOS関連サービスにおける情報の取得、利用、保存、問い合わせ方法について説明します。",
-        markdown: "/content/privacy.md"
-    },
-    "/terms/": {
-        title: "利用規約",
-        eyebrow: "Terms",
-        subtitle: "mochiOS関連サービスを利用する際の基本的なルールです。",
-        markdown: "/content/terms.md"
-    },
-    "/appstore/developer-terms/": {
-        title: "AppStore開発者規約",
-        eyebrow: "Developer Terms",
-        subtitle: "mochiOS AppStoreでアプリを登録・配布する開発者向けの規約です。",
-        markdown: "/content/appstore/developer-terms.md"
-    },
-    "/appstore/review-guidelines/": {
-        title: "AppStore審査ガイドライン",
-        eyebrow: "Review Guidelines",
-        subtitle: "mochiOS AppStoreに提出されるアプリの審査方針です。",
-        markdown: "/content/appstore/review-guidelines.md"
-    }
-};
+let POLICY_MANIFEST = null;
+let POLICY_DOCS = [];
 
 function normalizePath(pathname) {
     if (!pathname.endsWith("/")) {
@@ -40,12 +10,32 @@ function normalizePath(pathname) {
 }
 
 function escapeHtml(value) {
-    return value
+    return String(value)
         .replaceAll("&", "&amp;")
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
+}
+
+async function fetchJson(url) {
+    const response = await fetch(url, { cache: "no-store" });
+
+    if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${url}`);
+    }
+
+    return await response.json();
+}
+
+async function fetchText(url) {
+    const response = await fetch(url, { cache: "no-store" });
+
+    if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${url}`);
+    }
+
+    return await response.text();
 }
 
 function renderInline(value) {
@@ -174,50 +164,6 @@ function renderMarkdown(markdown) {
     return html.join("\n");
 }
 
-function setActiveNav(path) {
-    document.querySelectorAll("[data-policy-link]").forEach(link => {
-        const href = normalizePath(new URL(link.href).pathname);
-        link.classList.toggle("active", href === path);
-    });
-}
-
-async function loadDocument() {
-    const path = normalizePath(location.pathname);
-    const doc = DOCS[path] || DOCS["/"];
-
-    document.title = `${doc.title} - mochiOS Policy`;
-    document.querySelector("[data-policy-eyebrow]").textContent = doc.eyebrow;
-    document.querySelector("[data-policy-title]").textContent = doc.title;
-    document.querySelector("[data-policy-subtitle]").textContent = doc.subtitle;
-    document.querySelector("[data-policy-updated]").textContent = "最終更新: 読み込み中";
-    setActiveNav(path);
-
-    const container = document.querySelector("[data-policy-content]");
-    container.innerHTML = '<div class="policy-loading">文書を読み込んでいます。</div>';
-
-    try {
-        const response = await fetch(doc.markdown, { cache: "no-store" });
-
-        if (!response.ok) {
-            console.error(`HTTP ${response.status}`);
-        }
-
-        const markdown = await response.text();
-        const parsed = parseMarkdownDocument(markdown);
-
-        if (parsed.meta.update) {
-            document.querySelector("[data-policy-updated]").textContent = `最終更新: ${parsed.meta.update}`;
-        } else {
-            document.querySelector("[data-policy-updated]").textContent = "最終更新: 未記載";
-        }
-
-        container.innerHTML = `<article class="doc-card markdown">${renderMarkdown(parsed.body)}</article>`;
-    } catch (error) {
-        document.querySelector("[data-policy-updated]").textContent = "最終更新: 取得不可";
-        container.innerHTML = `<div class="policy-error">文書を読み込めませんでした。<br><code>${escapeHtml(error.message)}</code></div>`;
-    }
-}
-
 function parseMarkdownDocument(markdown) {
     const normalized = markdown.replace(/\r\n/g, "\n");
 
@@ -259,4 +205,128 @@ function parseMarkdownDocument(markdown) {
     };
 }
 
-loadDocument().then(() => {});
+function flattenDocs(manifest) {
+    return manifest.sections.flatMap(section => {
+        return section.items.map(item => {
+            return {
+                ...item,
+                path: normalizePath(item.path),
+                section: section.label
+            };
+        });
+    });
+}
+
+function findDocument(pathname) {
+    const path = normalizePath(pathname);
+    return POLICY_DOCS.find(doc => doc.path === path) || POLICY_DOCS.find(doc => doc.path === "/");
+}
+
+function renderSidebar() {
+    const sidebar = document.querySelector("[data-policy-sidebar]");
+
+    sidebar.innerHTML = POLICY_MANIFEST.sections.map(section => {
+        const links = section.items.map(item => {
+            const path = normalizePath(item.path);
+            const title = item.navTitle || item.title;
+
+            return `<a class="sb-link" href="${escapeHtml(path)}" data-policy-link>${escapeHtml(title)}</a>`;
+        }).join("");
+
+        return `<div class="sb-section"><div class="sb-label">${escapeHtml(section.label)}</div>${links}</div>`;
+    }).join("");
+}
+
+function setActiveNav(pathname) {
+    const path = normalizePath(pathname);
+
+    document.querySelectorAll("[data-policy-link]").forEach(link => {
+        const href = normalizePath(new URL(link.href).pathname);
+        link.classList.toggle("active", href === path);
+    });
+}
+
+function setText(selector, value) {
+    const element = document.querySelector(selector);
+
+    if (element) {
+        element.textContent = value || "";
+    }
+}
+
+async function loadDocument(pathname = location.pathname) {
+    const path = normalizePath(pathname);
+    const doc = findDocument(path);
+    const container = document.querySelector("[data-policy-content]");
+
+    document.title = `${doc.title} - ${POLICY_MANIFEST.site.title}`;
+    setText("[data-policy-eyebrow]", doc.eyebrow || "Policy");
+    setText("[data-policy-title]", doc.title);
+    setText("[data-policy-subtitle]", doc.subtitle || "");
+    setText("[data-policy-category]", doc.category || doc.section || "Policy");
+    setText("[data-policy-updated]", "最終更新: 読み込み中");
+    setActiveNav(path);
+
+    container.innerHTML = '<div class="policy-loading">文書を読み込んでいます。</div>';
+
+    try {
+        const markdown = await fetchText(doc.markdown);
+        const parsed = parseMarkdownDocument(markdown);
+        const update = parsed.meta.update || doc.update;
+
+        if (update) {
+            setText("[data-policy-updated]", `最終更新: ${update}`);
+        } else {
+            setText("[data-policy-updated]", "最終更新: 未記載");
+        }
+
+        container.innerHTML = `<article class="doc-card markdown">${renderMarkdown(parsed.body)}</article>`;
+    } catch (error) {
+        setText("[data-policy-updated]", "最終更新: 取得不可");
+        container.innerHTML = `<div class="policy-error">文書を読み込めませんでした。<br><code>${escapeHtml(error.message)}</code></div>`;
+    }
+}
+
+function enableClientNavigation() {
+    document.addEventListener("click", event => {
+        const link = event.target.closest("a[href]");
+
+        if (!link) {
+            return;
+        }
+
+        const url = new URL(link.href);
+
+        if (url.origin !== location.origin) {
+            return;
+        }
+
+        if (!POLICY_DOCS.some(doc => doc.path === normalizePath(url.pathname))) {
+            return;
+        }
+
+        event.preventDefault();
+        history.pushState({}, "", url.pathname);
+        loadDocument(url.pathname);
+    });
+
+    window.addEventListener("popstate", () => {
+        loadDocument(location.pathname);
+    });
+}
+
+async function main() {
+    POLICY_MANIFEST = await fetchJson("/content/index.json");
+    POLICY_DOCS = flattenDocs(POLICY_MANIFEST);
+    renderSidebar();
+    enableClientNavigation();
+    await loadDocument();
+}
+
+main().catch(error => {
+    const container = document.querySelector("[data-policy-content]");
+
+    if (container) {
+        container.innerHTML = `<div class="policy-error">文書一覧を読み込めませんでした。<br><code>${escapeHtml(error.message)}</code></div>`;
+    }
+});

@@ -1,6 +1,6 @@
 {
     "site": {
-        "title": "mochiOS Policy",
+        "title": "mochiOS Policies | Terms and Guidlines",
         "description": "mochiOS関連サービスの方針文書"
     },
     "sections": [
@@ -10,7 +10,7 @@
                 {
                     "path": "/",
                     "navTitle": "Overview",
-                    "title": "mochiOS Policy",
+                    "title": "mochiOS Policies | Terms and Guidlines",
                     "eyebrow": "Legal Center",
                     "category": "Policy",
                     "subtitle": "mochiOS関連サービスの規約、プライバシーポリシー、開発者向けルールをまとめています。",

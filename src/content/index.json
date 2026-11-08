@@ -72,6 +72,20 @@
                     "markdown": "/content/governance/index.md"
                 }
             ]
+        },
+        {
+            "label": "Recognition",
+            "items": [
+                {
+                    "path": "/recognition/",
+                    "navTitle": "Honors & Recognition",
+                    "title": "表彰・名誉称号規程",
+                    "eyebrow": "Honors & Recognition",
+                    "category": "Recognition",
+                    "subtitle": "mochiOS Teamにおける功績の認定、名誉称号の授与およびその管理について定めます。",
+                    "markdown": "/content/recognition/index.md"
+                }
+            ]
         }
     ]
 }

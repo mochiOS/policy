@@ -130,7 +130,7 @@ mochiOSおよび関連サービスは、現状有姿で提供されます。
 
 本規約に関する問い合わせは、mochiOS運営者までご連絡ください。
 
-security@mochios.org
+- Mail: security@mail.mochios.org
 
 # 変更履歴
 

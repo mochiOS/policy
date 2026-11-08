@@ -58,6 +58,20 @@
                     "markdown": "/content/appstore/review-guidelines.md"
                 }
             ]
+        },
+        {
+            "label": "Governance",
+            "items": [
+                {
+                    "path": "/governance/",
+                    "navTitle": "Governance",
+                    "title": "mochiOS Team 組織規程",
+                    "eyebrow": "Organization Governance",
+                    "category": "Governance",
+                    "subtitle": "mochiOS Teamの組織構造、意思決定、権限および責任を定めます。",
+                    "markdown": "/content/governance/index.md"
+                }
+            ]
         }
     ]
 }

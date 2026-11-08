@@ -128,7 +128,7 @@ mochiOS運営者は、取得した情報について、不正アクセス、漏�
 
 プライバシーに関する問い合わせは、以下までご連絡ください。
 
-security@mochios.org
+security@mail.mochios.org
 
 # 変更履歴
 

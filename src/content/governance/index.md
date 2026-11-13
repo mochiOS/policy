@@ -1,5 +1,5 @@
 ---
-update: 2026-11-08
+update: 2026-11-13
 ---
 # mochiOS Teamのガバナンス
 

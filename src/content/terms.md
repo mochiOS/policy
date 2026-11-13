@@ -145,6 +145,10 @@ mochiOS TeamのOwner、Core Member、Maintainerその他のメンバーは、組
 
 # 変更履歴
 
+## 2026-11-13
+
+- 責任と免責及び保証について更新
+
 ## 2026-11-08
 
 - 運営主体をmochiOS Teamとして明確化
